@@ -1,7 +1,6 @@
 package org.qamation.webdriver;
 
 import org.junit.After;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -22,13 +21,14 @@ public class ChromeWebDriverFactoryTests {
 
     @BeforeClass
     public static void setUp() {
-        System.setProperty("env","test");
+        System.setProperty("env", "test");
     }
 
     @After
     public void tearDown() {
-        //if (Objects.nonNull(driver)) driver.quit();
+        if (Objects.nonNull(driver)) driver.quit();
     }
+
     @Test
     public void createLocalChromeDriver() {
         driver = ChromeDriverFactory.createLocalChromeDriver();
@@ -52,13 +52,13 @@ public class ChromeWebDriverFactoryTests {
     @Test
     public void createLocalChromeDriverUsingExecPathAndOptions() {
         ChromeOptions options = ChromeDriverFactory.getChromeOptions();
-        driver = ChromeDriverFactory.createLocalChromeDriver(Config.getConfig().getChromeDriverPath(),options);
+        driver = ChromeDriverFactory.createLocalChromeDriver(Config.getConfig().getChromeDriverPath(), options);
         testDriverOnGoogle(driver);
     }
 
     private void waitForQ(WebDriver driver) {
-        Duration duration = Duration.ofSeconds(Config.getConfig().getPageLoadTimeOutMills()/1000);
-        Wait wait = new WebDriverWait(driver, duration);
+        Duration duration = Duration.ofSeconds(Config.getConfig().getPageLoadTimeOutMills() / 1000);
+        WebDriverWait wait = new WebDriverWait(driver, duration);
         wait.until(ExpectedConditions.elementToBeClickable(q));
     }
 
